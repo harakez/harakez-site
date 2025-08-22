@@ -1,19 +1,18 @@
 // src/app/page.tsx
 import HeroSection from '@/components/HeroSection';
-import ManifestoSection from '@/components/ManifestoSection';
 import InspirationSection from '@/components/InspirationSection'; // <-- Новая уникальная секция
 import SupportSection from '@/components/SupportSection';
-import FeedbackSection from '@/components/FeedbackSection';
+// import FloatingControls from '@/components/FloatingControls';
 import Footer from '@/components/Footer';
-
-export default function HomePage() {
+import PrintsSection from '@/components/PrintsSection';export default function HomePage() {
   return (
     <main>
       <HeroSection />
-      <ManifestoSection />
       <InspirationSection />
       <SupportSection />
-      <FeedbackSection />
+      <PrintsSection />
+      {/* <FeedbackSection /> */}
+      {/* <FloatingControls /> */}
       <Footer />
     </main>
   );
