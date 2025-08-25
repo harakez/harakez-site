@@ -63,12 +63,12 @@ const SupportSection: React.FC = () => {
         navigator.clipboard.writeText(window.location.href);
         alert('Ссылка скопирована! Поделитесь ею вручную.');
       }
-    } catch (error) {
+    } catch {
       navigator.clipboard.writeText(window.location.href);
       alert('Ссылка скопирована! Поделитесь ею вручную.');
     }
   };
-
+  
   return (
     <section id="support" className="bg-white py-24 px-4 sm:px-6 relative overflow-hidden">
       {/* Декоративный фон - очень тонкие элементы */}
