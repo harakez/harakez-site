@@ -28,6 +28,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ru">
+      <head>
+        {/* --- ДОБАВЛЕНА ТОЛЬКО ЭТА СТРОКА, КАК ВЫ ПРОСИЛИ --- */}
+        <meta name="google-site-verification" content="Nc8XZonH8aRMqkUftAR_-qd03A_xogGUUIlsU5PHZag" />
+      </head>
       <body className={rubik.className}>
         <Loader />
         {children}
