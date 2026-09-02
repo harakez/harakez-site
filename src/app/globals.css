@@ -1,26 +1,275 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================
+   HARAKEZ — дизайн-токены
+   Палитра снята с фирменных бирок: бумага, чернила, пламя.
+   ============================================================ */
+
+@theme {
+  /* Поверхности */
+  --color-paper:     #F5F2EA;  /* основной фон — тёплая бумага, как бирка TAG A */
+  --color-paper-2:   #EDE8DD;  /* вторая поверхность, лёгкое углубление */
+  --color-paper-3:   #E3DDCF;  /* третья, для разделителей и плашек */
+  --color-shell:     #FBFAF7;  /* карточки — почти белый, но не стерильный */
+
+  /* Чернила */
+  --color-ink:       #16140F;  /* основной текст и «чёрная» бирка */
+  --color-ink-2:     #3A362E;  /* вторичный текст */
+  --color-muted:     #7A7365;  /* подписи, мета */
+  --color-line:      #D9D3C5;  /* линии */
+
+  /* Акцент.
+     Оранжевый снят со special-edition бирки. Используется точечно:
+     кнопка, цифра, точка статуса — но никогда как фон целого блока.
+
+     Чтобы уйти в полностью нейтральную палитру, замените три
+     значения ниже на эти:
+       --color-flame:     #16140F;
+       --color-flame-2:   #3A362E;
+       --color-flame-soft:#EDE8DD;
+     Больше нигде править не нужно: акцент сменится на всём сайте. */
+  --color-flame:     #E04A1B;
+  --color-flame-2:   #C43D12;  /* наведение */
+  --color-flame-soft:#FBE7DE;  /* подложка */
+
+  /* Шрифты */
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    var(--font-mono-tag), ui-monospace, monospace;
+
+  /* Ритм */
+  --spacing-section: 7.5rem;
+
+  /* Плавность */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Анимации */
+  /* Скорость подобрана так, чтобы слова успевали читаться:
+     половина ленты ~3400px за 95 c — около 36 px/с. */
+  --animate-marquee: marquee 95s linear infinite;
+  --animate-rise: rise 0.9s var(--ease-brand) both;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   База
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv05";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
+
+::selection {
+  background: var(--color-flame);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-flame);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Утилиты
+   ============================================================ */
+
+@layer components {
+/* Зерно на фоне — убирает «пластиковость» плоской заливки */
+.grain {
+  position: relative;
+}
+.grain-layer {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+
+/* Мономаркировка — как на бирках */
+.tag-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Логотипное начертание */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+/* Крупные заголовки */
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+/* Перфорация как на краю бирки */
+.perforated-top {
+  background-image: radial-gradient(circle at 5px 0, transparent 4px, currentColor 4.5px);
+  background-size: 10px 10px;
+  background-repeat: repeat-x;
+}
+}
+
+/* Прочерчивание знака в лоадере */
+/* ------------------------------------------------------------
+   Сборка знака в заставке.
+
+   Всё состояние держат кейфреймы: диагонали прочерчиваются,
+   круг опускается в центр и остаётся там навсегда (forwards).
+   Утилиты scale-* сюда не годятся — в Tailwind 4 это отдельное
+   свойство `scale`, оно перемножается с transform и гасит круг.
+   ------------------------------------------------------------ */
+
+.mark-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: mark-draw 0.85s var(--ease-brand) both;
+}
+.mark-stroke-1 { animation-delay: 0.1s; }
+.mark-stroke-2 { animation-delay: 0.32s; }
+
+.mark-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-dot 0.75s var(--ease-brand) 0.78s both;
+}
+
+@keyframes mark-draw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes mark-dot {
+  0%   { opacity: 0; transform: translateY(-26px) scale(0.2); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.18); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ============================================================
+   Появление при прокрутке — на чистом CSS.
+
+   Раньше это делала framer-motion: 46 КБ скрипта ради того, что
+   умеет сам браузер. Видимость переключает IntersectionObserver,
+   всё остальное — переход CSS, без работы в главном потоке.
+   ============================================================ */
+
+.js .rv {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s var(--ease-brand),
+    transform 0.7s var(--ease-brand);
+  transition-delay: var(--rv-delay, 0ms);
+}
+.rv.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Слова манифеста: те же правила плюс размытие */
+.rv-word { display: inline-block; }
+.js .rv-word {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(4px);
+  transition:
+    opacity 0.55s var(--ease-brand),
+    transform 0.55s var(--ease-brand),
+    filter 0.55s var(--ease-brand);
+  transition-delay: var(--rv-delay, 0ms);
+}
+.is-in > .rv-word {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* Раскрывающийся ответ в вопросах: сетка вместо замера высоты */
+.acc {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-brand);
+}
+.acc.is-open { grid-template-rows: 1fr; }
+.acc > div { overflow: hidden; }
+
+/* Если анимации отключены системно — показываем всё сразу */
+@media (prefers-reduced-motion: reduce) {
+  .js .rv, .js .rv-word { opacity: 1; transform: none; filter: none; }
+}
+
+/* ============================================================
+   Заставка: последовательность на CSS.
+   Финальный кадр каждой анимации фиксируется (both/forwards),
+   поэтому ничего не исчезает и не откатывается.
+   ============================================================ */
+
+.intro-letter {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(110%);
+  animation: intro-letter 0.6s var(--ease-brand) both;
+  animation-delay: var(--d, 0ms);
+}
+@keyframes intro-letter {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.intro-rule {
+  width: 0;
+  animation: intro-rule 0.7s var(--ease-brand) 1.5s both;
+}
+@keyframes intro-rule { to { width: 100%; } }
+
+.intro-tagline {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: intro-fade 0.6s var(--ease-brand) 1.85s both;
+}
+@keyframes intro-fade {
+  to { opacity: 1; transform: none; }
+}
+
+.intro-progress {
+  width: 0;
+  animation: intro-progress 2.9s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+@keyframes intro-progress { to { width: 100%; } }

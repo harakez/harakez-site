@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# резервная копия старого сайта
+_backup-old-site/
+
+# локальная конфигурация редактора
+.claude/

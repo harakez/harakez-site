@@ -1,20 +1,33 @@
-// src/app/page.tsx
-import HeroSection from '@/components/HeroSection';
-import ManifestoSection from '@/components/ManifestoSection';
-import InspirationSection from '@/components/InspirationSection'; // <-- Новая уникальная секция
-import SupportSection from '@/components/SupportSection';
-import FeedbackSection from '@/components/FeedbackSection';
-import Footer from '@/components/Footer';
+import Hero from '@/components/home/Hero';
+import Marquee from '@/components/home/Marquee';
+import Drops from '@/components/home/Drops';
+import Process from '@/components/home/Process';
+import Authenticity from '@/components/home/Authenticity';
+import ManifestoTeaser from '@/components/home/ManifestoTeaser';
+import Faq from '@/components/home/Faq';
+import Waitlist from '@/components/home/Waitlist';
+
+/* ------------------------------------------------------------
+   Главная.
+
+   Порядок: заявление → вещи → положение дел → правила → гарантии.
+
+   Никаких выдуманных вещей: пока нет настоящих фотографий дропов,
+   сайт обходится без изображений одежды. Лучше сдержанно, чем
+   нарисованные эскизы вместо товара.
+   ------------------------------------------------------------ */
 
 export default function HomePage() {
   return (
-    <main>
-      <HeroSection />
-      <ManifestoSection />
-      <InspirationSection />
-      <SupportSection />
-      <FeedbackSection />
-      <Footer />
-    </main>
+    <>
+      <Hero />
+      <Marquee />
+      <Drops />
+      <Process />
+      <Authenticity />
+      <ManifestoTeaser />
+      <Faq />
+      <Waitlist />
+    </>
   );
 }

@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HARAKEZ
 
-## Getting Started
+Сайт бренда одежды HARAKEZ: дизайны приходят от сообщества, отобранное уходит
+в ограниченный пронумерованный тираж.
 
-First, run the development server:
+Next.js 15 (App Router) · React 19 · TypeScript · Tailwind 4 · Framer Motion
+
+## Запуск
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev     # разработка, http://localhost:3000
+npm run build   # production-сборка
+npm start       # запуск собранного
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Что где лежит
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+src/
+  app/
+    layout.tsx           шрифты, метаданные, шапка и подвал
+    page.tsx             главная — порядок секций
+    globals.css          ВСЕ цвета, шрифты и фирменные классы
+    manifesto/page.tsx   манифест
+    submit/page.tsx      приём дизайнов
+    opengraph-image.tsx  картинка превью ссылки, генерируется сама
+    icon.svg             фавикон
+  components/
+    brand/Logo.tsx       знак HARAKEZ в SVG
+    layout/              шапка, подвал
+    home/                секции главной
+    manifesto/           текст, набегающий по словам
+    submit/              форма приёма дизайнов
+    ui/                  контейнер, кнопки, всплытие, картинки
+  lib/
+    content.ts           ВЕСЬ ТЕКСТ САЙТА
+    useFormspree.ts      отправка форм без ухода со страницы
+public/
+  README.md              куда класть фотографии
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Как что менять
 
-## Learn More
+**Тексты, спецификации, вопросы-ответы** — `src/lib/content.ts`.
+Один файл, код трогать не нужно.
 
-To learn more about Next.js, take a look at the following resources:
+**Цвета и шрифты** — блок `@theme` в начале `src/app/globals.css`.
+Поменяли `--color-flame` — поменялся акцент на всём сайте.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Фотографии** — положить в `public/` по именам из `public/README.md`.
+Пока файла нет, на его месте стоит фирменная заглушка, вёрстка не ломается.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Порядок секций на главной** — `src/app/page.tsx`, просто переставить строки.
 
-## Deploy on Vercel
+**Адреса форм** — поля `endpoint` в `content.ts` (сейчас Formspree).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Резервная копия
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Предыдущая версия сайта целиком лежит в `_backup-old-site/`.
+Из сборки и проверки типов исключена.
+
+## Бриф
+
+Требования, по которым сделана эта версия — `BRIEF.md`.
