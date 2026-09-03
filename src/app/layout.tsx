@@ -70,6 +70,12 @@ export const metadata: Metadata = {
   creator: 'HARAKEZ',
   publisher: 'HARAKEZ',
   alternates: { canonical: '/' },
+  /* Иконка объявлена явно и лежит в public.
+     Соглашение app/icon.svg перестало собираться в Next 16. */
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/icon.svg' }],
+  },
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
@@ -122,18 +128,10 @@ export default function RootLayout({
       className={`${inter.variable} ${interTight.variable} ${mono.variable}`}
     >
       <head>
-        {/* Прячем блоки до появления только если скрипт жив.
-
-            Раньше .rv скрывал контент безусловно, а показывал его
-            уже IntersectionObserver. Если бы скрипт не выполнился
-            или упал, сайт остался бы пустой страницей. Теперь класс
-            js ставится первой же строкой скрипта: не выполнилась —
-            ничего и не спрятано. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
-          }}
-        />
+        {/* Без скриптов заставку нужно убрать, иначе она закроет
+            сайт навсегда, а свёрнутые блоки — раскрыть.
+            Скрытие блоков до появления живёт в globals.css под
+            медиапризнаком scripting: enabled. */}
         <noscript>
           <style
             dangerouslySetInnerHTML={{

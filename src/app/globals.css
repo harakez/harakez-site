@@ -191,7 +191,12 @@ body {
    всё остальное — переход CSS, без работы в главном потоке.
    ============================================================ */
 
-.js .rv {
+/* Прячем до появления только там, где скрипты действительно
+   работают. Медиапризнак scripting делает это средствами CSS:
+   класс на <html> не подходил — скрипт дописывал его до гидратации,
+   и React ругался на расхождение с серверной разметкой. */
+@media (scripting: enabled) {
+.rv {
   opacity: 0;
   transform: translateY(20px);
   transition:
@@ -203,10 +208,12 @@ body {
   opacity: 1;
   transform: none;
 }
+}
 
 /* Слова манифеста: те же правила плюс размытие */
 .rv-word { display: inline-block; }
-.js .rv-word {
+@media (scripting: enabled) {
+.rv-word {
   opacity: 0;
   transform: translateY(14px);
   filter: blur(4px);
@@ -221,6 +228,7 @@ body {
   transform: none;
   filter: none;
 }
+}
 
 /* Раскрывающийся ответ в вопросах: сетка вместо замера высоты */
 .acc {
@@ -233,7 +241,7 @@ body {
 
 /* Если анимации отключены системно — показываем всё сразу */
 @media (prefers-reduced-motion: reduce) {
-  .js .rv, .js .rv-word { opacity: 1; transform: none; filter: none; }
+  .rv, .rv-word { opacity: 1; transform: none; filter: none; }
 }
 
 /* ============================================================
