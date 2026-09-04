@@ -93,7 +93,7 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-3">
+        <div className="flex shrink-0 items-center gap-4 sm:gap-5 lg:gap-6">
           <LanguageSwitcher className="hidden sm:inline-flex" />
 
           <Link
