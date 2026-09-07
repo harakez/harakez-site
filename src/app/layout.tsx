@@ -73,8 +73,15 @@ export const metadata: Metadata = {
   /* Иконка объявлена явно и лежит в public.
      Соглашение app/icon.svg перестало собираться в Next 16. */
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    apple: [{ url: '/icon.svg' }],
+    /* PNG идёт первым: поисковики увереннее работают с растром,
+       именно эта иконка попадает в выдачу рядом с адресом сайта.
+       SVG остаётся для вкладки браузера — он резкий на любом экране. */
+    icon: [
+      { url: '/icon-96.png', type: 'image/png', sizes: '96x96' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/icon-96.png', sizes: '96x96' }],
+    shortcut: [{ url: '/icon-96.png' }],
   },
   openGraph: {
     type: 'website',
