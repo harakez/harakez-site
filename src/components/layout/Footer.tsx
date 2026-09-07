@@ -6,6 +6,7 @@ import { LogoMark } from '@/components/brand/Logo';
 import { Container } from '@/components/ui/primitives';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 import { useT } from '@/lib/LanguageProvider';
+import { socials } from '@/lib/i18n';
 
 /* ------------------------------------------------------------
    Подвал.
@@ -61,13 +62,17 @@ const Footer: React.FC = () => {
           <nav aria-label={t.footer.contact}>
             <h2 className="tag-label mb-5">{t.footer.contact}</h2>
             <ul className="-my-1.5">
-              {['Instagram', 'Telegram', 'TikTok'].map((label) => (
-                <li key={label}>
+              {socials.map((s) => (
+                <li key={s.label}>
+                  {/* rel="me" помечает профиль как принадлежащий этому же
+                      владельцу — поиск использует это для связи сущностей */}
                   <a
-                    href="#"
+                    href={s.href}
+                    target="_blank"
+                    rel="me noopener noreferrer"
                     className="group flex min-h-[44px] items-center gap-2 text-[15px] text-ink-2 transition-colors duration-300 hover:text-flame"
                   >
-                    {label}
+                    {s.label}
                     <span className="text-[11px] opacity-0 transition-opacity duration-300 group-hover:opacity-60">
                       ↗
                     </span>

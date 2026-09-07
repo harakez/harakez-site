@@ -6,6 +6,7 @@ import Loader from '@/components/Loader';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/lib/LanguageProvider';
+import { socials } from '@/lib/i18n';
 
 /* ------------------------------------------------------------
    Шрифты
@@ -52,14 +53,16 @@ export const metadata: Metadata = {
     template: '%s — HARAKEZ',
   },
   description:
-    'HARAKEZ (Харакез) — бренд одежды, который будет шить вещи по дизайнам ' +
-    'сообщества и выпускать их ограниченными пронумерованными тиражами.',
+    'Официальный сайт бренда одежды HARAKEZ (Харакез). Вещи создаются ' +
+    'по дизайнам сообщества и выходят ограниченными пронумерованными ' +
+    'тиражами. Базируемся в Ташкенте, отправляем по всему миру.',
   applicationName: 'HARAKEZ',
   keywords: [
     'HARAKEZ',
     'Харакез',
-    'харакез бренд',
-    'harakez одежда',
+    'харакез бренд одежды',
+    'harakez бренд',
+    'харакез одежда',
     'бренд одежды',
     'лимитированная одежда',
     'дроп одежды',
@@ -113,17 +116,65 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
-/* Структурированные данные: связывают HARAKEZ и Харакез для поиска. */
+/* ------------------------------------------------------------
+   Структурированные данные.
+
+   Задача — объяснить поиску, что HARAKEZ это бренд одежды, а не
+   портфолио фрилансера. Для этого:
+     · тип Brand рядом с Organization,
+     · sameAs со ссылками на профили бренда — они связывают сайт
+       и аккаунты в одну сущность,
+     · город и охват, чтобы бренд не путали с однофамильцами,
+     · WebSite отдельным узлом, иначе поиск считает сайт безымянным.
+   ------------------------------------------------------------ */
+
+const orgId = `${siteUrl}/#organization`;
+
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'HARAKEZ',
-  alternateName: ['Харакез', 'harakez'],
-  url: siteUrl,
-  logo: `${siteUrl}/icon.svg`,
-  description:
-    'Бренд одежды: вещи по дизайнам сообщества, ограниченные пронумерованные тиражи.',
-  slogan: 'Одежда по дизайнам сообщества',
+  '@graph': [
+    {
+      '@type': ['Organization', 'Brand'],
+      '@id': orgId,
+      name: 'HARAKEZ',
+      alternateName: ['Харакез', 'harakez', 'HARAKEZ clothing'],
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/icon-96.png`,
+        width: 96,
+        height: 96,
+      },
+      image: `${siteUrl}/icon-96.png`,
+      description:
+        'HARAKEZ — бренд одежды. Вещи создаются по дизайнам сообщества ' +
+        'и выпускаются ограниченными пронумерованными тиражами.',
+      slogan: 'Одежда по дизайнам сообщества',
+      knowsAbout: [
+        'бренд одежды',
+        'лимитированные тиражи одежды',
+        'дизайн одежды',
+        'streetwear',
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Ташкент',
+        addressCountry: 'UZ',
+      },
+      areaServed: 'Worldwide',
+      sameAs: socials.map((s) => s.href),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'HARAKEZ',
+      inLanguage: 'ru-RU',
+      publisher: { '@id': orgId },
+      description:
+        'Официальный сайт бренда одежды HARAKEZ (Харакез).',
+    },
+  ],
 };
 
 export default function RootLayout({
