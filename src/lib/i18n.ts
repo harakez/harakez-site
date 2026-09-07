@@ -21,7 +21,7 @@ export const langNames: Record<Lang, string> = { ru: 'RU', en: 'EN' };
    данные: список sameAs говорит поиску, что сайт и эти аккаунты —
    один и тот же бренд, а не разные сущности. */
 export const socials = [
-  { label: 'Instagram', href: 'https://www.instagram.com/harakez' },
+  { label: 'Instagram', href: 'https://www.instagram.com/harakez_official' },
   { label: 'Telegram', href: 'https://t.me/harakez' },
   { label: 'TikTok', href: 'https://www.tiktok.com/@harakez_official' },
 ];
